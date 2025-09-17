@@ -2,8 +2,8 @@
 
 NUMBER1=10
 NUMBER2=11
-
-echo "Script is executed at" $date
+TIME_STAMP=$(date)
+echo "Script is executed at" $TIME_STAMP
 
 SUM=$(($NUMBER1+$NUMBER2))
 
