@@ -11,8 +11,8 @@ LOG_FILE="$LOG_FOLDER/$SCRIPT_NAME.log"
 
 #check if the user is root
 
-mkdir -p LOG_FOLDER
-echo "Script execution started at $(date) | tee -a $LOG_FILE
+mkdir -p $LOG_FOLDER
+echo "Script execution started at $(date)" | tee -a $LOG_FILE
 
 is_root_user() {
     if [ $(id -u) -ne 0 ]; then
@@ -33,7 +33,7 @@ is_package_already_installed() {
         echo -e "$R $package not installed, proceeding to install $N"
         dnf install $package -y
     
-        if [ $? -nq 0 ]; then
+        if [ $? -ne 0 ]; then
             echo -e "$R $package installation failed $N" | tee -a $LOG_FILE
             exit 1
         else
