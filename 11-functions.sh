@@ -8,10 +8,10 @@ fi
 
 is_package_already_installed() {
     if ! dnf list installed $1 &> /dev/null: then
-    echo "mysql is not found"
+        echo "mysql is not found"
     else
-    echo "MySql is already installed"
-    exit 0
+        echo "MySql is already installed"
+        exit 0
     fi
 }
 
