@@ -3,7 +3,7 @@
 #check if the user is root
 
 is_root_user() {
-    if [ $(id -u) -nq 0 ]; then
+    if [ $(id -u) -ne 0 ]; then
         echo "Error: You are not a root user to perform this action"
         exit 1
     fi
@@ -30,7 +30,7 @@ is_package_already_installed() {
 
 is_root_user
 
-packages = ("mysql" "python3" "nginx")
+packages=("mysql" "python3" "nginx")
 
 for package in "{packages[@]}"; do
     is_package_already_installed "$package"
