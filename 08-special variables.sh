@@ -8,3 +8,4 @@ sleep 10 &
 echo "PID of the script: $$"
 echo "PID of the last command: $!"
 echo "All variables passed to the script: $@"
+echo " All vars: $*"
