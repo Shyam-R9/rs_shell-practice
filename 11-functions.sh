@@ -1,26 +1,37 @@
 #!/bin/bash
-#check if the current user is the root user
 
-if [ "$(id -u )" -ne 0 ]; then
-    echo "You do not have privileges to run the script"
-    exit 1
-fi
+#check if the user is root
 
-#check if the MySQL package is already installed
-
-if ! dnf list installed mysql &> /dev/null; then
-    echo "mysql is not found. Proceeding to install"
-
-    #installnig MySql and verifying if it was installed scucessfully
-    if dnf install mysql -y; then
-        echo "mysql installed successfully"
-    
-    else
-        echo "mysql installation failed"
+is_root_user() {
+    if [ $(id -u) -nq 0 ]; then
+        echo "Error: You are not a root user to perform this action"
         exit 1
     fi
-else
-    echo "MySql is already installed"
-    exit 0
-fi
+}
 
+#check if the package is already installed, if not installed, proceed to install
+
+is_package_already_installed() {
+    if dnf list installed $package &> /dev/null; then
+        echo "$package already installed"
+        exit 0
+    else
+        echo "$package not installed, proceeding to install"
+        dnf install $package -y
+        if ($? -nq 0); then
+            echo "$package installation failed"
+            exit 1
+        else
+            echo "$package installed successfully"
+        fi 
+    fi
+
+}
+
+is_root_user
+
+packages = ("mysql" "python3" "nginx")
+
+for package in "{packages[@]}"; do
+    is_package_already_installed "$package"
+done
