@@ -12,13 +12,16 @@ is_root_user() {
 #check if the package is already installed, if not installed, proceed to install
 
 is_package_already_installed() {
+    local package=$1
+    
     if dnf list installed $package &> /dev/null; then
         echo "$package already installed"
-        exit 0
+    
     else
         echo "$package not installed, proceeding to install"
         dnf install $package -y
-        if ($? -nq 0); then
+    
+        if [ $? -nq 0 ]; then
             echo "$package installation failed"
             exit 1
         else
@@ -32,6 +35,6 @@ is_root_user
 
 packages=("mysql" "python3" "nginx")
 
-for package in "{packages[@]}"; do
+for package in "${packages[@]}"; do
     is_package_already_installed "$package"
 done
